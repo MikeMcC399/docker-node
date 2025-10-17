@@ -5,6 +5,7 @@ on:
     paths:
       - "**/*.md"
       - "markdown_link_check_config.json"
+  workflow_dispatch:
 
 permissions:
   contents: read
