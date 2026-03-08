@@ -169,7 +169,7 @@ function update_node_version() {
       echo "${dockerfile} is already up to date!"
     else
       # For Node 26+, remove Yarn installation section
-      if [ "${version}" -ge 26 ]; then
+      if [ "${version}" -ge 25 ]; then
         sed -Ei -e '/^# YARN_INSTALLATION_START$/,/^# YARN_INSTALLATION_END$/d' "${dockerfile}-tmp"
       else
         # For Node < 26, update Yarn version
