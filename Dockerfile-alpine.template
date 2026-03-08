@@ -71,6 +71,7 @@ RUN addgroup -g 1000 node \
   && npm --version \
   && rm -rf /tmp/*
 
+# YARN_INSTALLATION_START
 ENV YARN_VERSION=0.0.0
 
 RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
@@ -96,6 +97,7 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   # smoke test
   && yarn --version \
   && rm -rf /tmp/*
+# YARN_INSTALLATION_END
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
