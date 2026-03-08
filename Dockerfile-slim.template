@@ -53,6 +53,7 @@ RUN ARCH= OPENSSL_ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && npm --version \
     && rm -rf /tmp/*
 
+# YARN_INSTALLATION_START
 ENV YARN_VERSION=0.0.0
 
 RUN set -ex \
@@ -90,6 +91,7 @@ RUN set -ex \
   # smoke test
   && yarn --version \
   && rm -rf /tmp/*
+# YARN_INSTALLATION_END
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
