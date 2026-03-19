@@ -145,6 +145,7 @@ function update_node_version() {
       checksum=$(
         curl -sSL --compressed "https://unofficial-builds.nodejs.org/download/release/v${nodeVersion}/SHASUMS256.txt" | grep "node-v${nodeVersion}-linux-x64-musl.tar.xz" | cut -d' ' -f1
       )
+      checksum=""
       if [ -z "$checksum" ]; then
         rm -f "${dockerfile}-tmp"
         if [ "${SKIP_ALPINE}" = true ]; then
