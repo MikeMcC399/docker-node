@@ -149,7 +149,8 @@ function update_node_version() {
       if [ -z "$checksum" ]; then
         rm -f "${dockerfile}-tmp"
         if [ "${SKIP_ALPINE}" = true ]; then
-          echo "${nodeVersion} is missing the musl build, but skipping for security release!"
+          echo "${nodeVersion} is missing the musl build for ${variant}, but skipping for security release!"
+          exit 0
         else
           fatal "Failed to fetch checksum for musl build version ${nodeVersion}"
         fi
