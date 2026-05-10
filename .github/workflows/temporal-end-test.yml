@@ -1,0 +1,33 @@
+name: temporal end-to-end test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-3-22:
+    strategy:
+      fail-fast: false
+      matrix:
+        architecture:
+          - ''
+          - '-arm'
+    runs-on: ubuntu-24.04${{ matrix.architecture }}
+    container:
+      image: node:26.1.0-alpine3.22
+    steps:
+      - run: node --version
+      - run: node -e "console.log(Temporal)"
+
+  test-3-23:
+    strategy:
+      fail-fast: false
+      matrix:
+        architecture:
+          - ''
+          - '-arm'
+    runs-on: ubuntu-24.04${{ matrix.architecture }}
+    container:
+      image: node:26.1.0-alpine3.23
+    steps:
+      - run: node --version
+      - run: node -e "console.log(Temporal)"
