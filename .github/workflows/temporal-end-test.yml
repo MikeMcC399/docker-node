@@ -13,7 +13,7 @@ jobs:
           - '-arm'
     runs-on: ubuntu-24.04${{ matrix.architecture }}
     container:
-      image: node:26.1.0-alpine3.22
+      image: node:26-alpine3.22
     steps:
       - run: node --version
       - run: node -e "console.log(Temporal)"
@@ -27,7 +27,7 @@ jobs:
           - '-arm'
     runs-on: ubuntu-24.04${{ matrix.architecture }}
     container:
-      image: node:26.1.0-alpine3.23
+      image: node:26-alpine3.23
     steps:
       - run: node --version
       - run: node -e "console.log(Temporal)"
