@@ -1,6 +1,6 @@
-import { promisify } from "util";
+import { promisify } from 'util';
 
-import child_process from "child_process";
+import child_process from 'child_process';
 
 const exec = promisify(child_process.exec);
 
@@ -9,16 +9,16 @@ const exec = promisify(child_process.exec);
 // and returns whether we should update or not
 const checkIfThereAreNewVersions = async (github) => {
   try {
-    const { stdout: versionsOutput } = await exec(". ./functions.sh && get_versions", { shell: "bash" });
+    const { stdout: versionsOutput } = await exec('. ./functions.sh && get_versions', { shell: 'bash' });
 
-    const supportedVersions = versionsOutput.trim().split(" ");
+    const supportedVersions = versionsOutput.trim().split(' ');
 
     let latestSupportedVersions = {};
 
     for (let supportedVersion of supportedVersions) {
       const { stdout } = await exec(`ls ${supportedVersion}`);
 
-      const { stdout: fullVersionOutput } = await exec(`. ./functions.sh && get_full_version ./${supportedVersion}/${stdout.trim().split("\n")[0]}`, { shell: "bash" });
+      const { stdout: fullVersionOutput } = await exec(`. ./functions.sh && get_full_version ./${supportedVersion}/${stdout.trim().split('\n')[0]}`, { shell: 'bash' });
 
       console.log(fullVersionOutput);
 
@@ -35,13 +35,13 @@ const checkIfThereAreNewVersions = async (github) => {
     let filteredNewerVersions = {};
 
     for (let availableVersion of availableVersionsJson) {
-      const [availableMajor, availableMinor, availablePatch] = availableVersion.version.split("v")[1].split(".");
+      const [availableMajor, availableMinor, availablePatch] = availableVersion.version.split('v')[1].split('.');
       if (latestSupportedVersions[availableMajor] == null) {
         continue;
       }
 
       // eslint-disable-next-line no-unused-vars
-      const [_latestMajor, latestMinor, latestPatch] = latestSupportedVersions[availableMajor].fullVersion.split(".");
+      const [_latestMajor, latestMinor, latestPatch] = latestSupportedVersions[availableMajor].fullVersion.split('.');
       if (latestSupportedVersions[availableMajor] && (Number(availableMinor) > Number(latestMinor) || (availableMinor === latestMinor && Number(availablePatch) > Number(latestPatch)))) {
         filteredNewerVersions[availableMajor] = { fullVersion: `${availableMajor}.${availableMinor}.${availablePatch}` };
       }
@@ -50,7 +50,7 @@ const checkIfThereAreNewVersions = async (github) => {
     return {
       shouldUpdate: Object.keys(filteredNewerVersions).length > 0 && JSON.stringify(filteredNewerVersions) !== JSON.stringify(latestSupportedVersions),
       versions: filteredNewerVersions,
-    }
+    };
   } catch (error) {
     console.error(error);
     process.exit(1);
@@ -66,7 +66,7 @@ const checkForMuslVersionsAndSecurityReleases = async (github, versions) => {
     for (let version of Object.keys(versions)) {
       const buildVersion = unofficialBuildsIndexText.find(indexVersion => indexVersion.version === `v${versions[version].fullVersion}`);
 
-      versions[version].muslBuildExists = buildVersion?.files.includes("linux-x64-musl") ?? false;
+      versions[version].muslBuildExists = buildVersion?.files.includes('linux-x64-musl') ?? false;
       versions[version].isSecurityRelease = buildVersion?.security ?? false;
     }
     return versions;
@@ -84,14 +84,14 @@ export default async function(github) {
   const { shouldUpdate, versions } = await checkIfThereAreNewVersions(github);
 
   if (!shouldUpdate) {
-    console.log("No new versions found. No update required.");
+    console.log('No new versions found. No update required.');
     process.exit(0);
   } else {
     const newVersions = await checkForMuslVersionsAndSecurityReleases(github, versions);
     let updatedVersions = [];
     for (const [version, newVersion] of Object.entries(newVersions)) {
       if (newVersion.muslBuildExists) {
-        const { stdout } = await exec(`./update.sh ${newVersion.isSecurityRelease ? "-s " : ""}${version}`);
+        const { stdout } = await exec(`./update.sh ${newVersion.isSecurityRelease ? '-s ' : ''}${version}`);
         console.log(stdout);
         updatedVersions.push(newVersion.fullVersion);
       } else {
@@ -99,7 +99,7 @@ export default async function(github) {
         process.exit(0);
       }
     }
-    const { stdout } = (await exec(`git diff`));
+    const { stdout } = (await exec('git diff'));
     console.log(stdout);
 
     return updatedVersions.join(', ');
