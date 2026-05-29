@@ -39,6 +39,8 @@ const checkIfThereAreNewVersions = async (github) => {
       if (latestSupportedVersions[availableMajor] == null) {
         continue;
       }
+
+      // eslint-disable-next-line no-unused-vars
       const [_latestMajor, latestMinor, latestPatch] = latestSupportedVersions[availableMajor].fullVersion.split(".");
       if (latestSupportedVersions[availableMajor] && (Number(availableMinor) > Number(latestMinor) || (availableMinor === latestMinor && Number(availablePatch) > Number(latestPatch)))) {
         filteredNewerVersions[availableMajor] = { fullVersion: `${availableMajor}.${availableMinor}.${availablePatch}` };
