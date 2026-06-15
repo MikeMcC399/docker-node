@@ -23,6 +23,29 @@ You can use Node.js channels (prefixed by `#nodejs-`) in the [OpenJSF Slack](htt
 
 - [#nodejs-release](https://openjs-foundation.slack.com/archives/C019MGJQ8RH) is linked to the [Node.js Release Working Group](https://github.com/nodejs/release#readme) responsible for the upstream releases of Node.js used by this repo.
 
+## Prerequisites
+
+To contribute to this repo, install:
+
+- [git](https://git-scm.com/)
+- [Docker](https://docs.docker.com/get-started/get-docker/)
+
+then fork and clone the repo:
+
+1. [Fork this project.](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
+2. [Clone the forked repository.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
+## Pull requests
+
+Contributions are handled through GitHub pull requests. Branch from the default branch `main` and create a new branch, for example:
+
+```shell
+git checkout main
+git checkout -b my-branch
+```
+
+Make changes in your branch and then submit your contribution as a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) (PR), targeting the branch `main`.
+
 ## Version Updates
 
 New **Node.js** releases are released as soon as possible.
@@ -58,14 +81,12 @@ If you believe there is a need for a manual PR, and you are not a member of the
 please first open an issue to describe the update problem
 and your suggestion to resolve it.
 
-To set up a version update PR, follow these instructions:
+To set up a version update pull request, see the [Pull Requests](#pull-requests) section above and follow these instructions:
 
-1. [Fork this project.](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
-1. [Clone the forked repository.](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)
-1. Create a branch for the update PR. For example, `git checkout main; git checkout -b version-update`.
+1. Create a `version-update` branch
 1. Run `./update.sh`. You can see additional options by using the built-in help documentation with `./update.sh -h`. This script will automatically update the appropriate files with the latest versions and checksums.
 1. Commit the modified files to the `version-update` branch and push the branch to your fork.
-1. [Create a PR to merge the branch from your fork into this project's default branch.](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
+1. Create a pull request.
 
 When a new Node.js release line is expected, additional preparation is necessary, including updates to the
 [versions.json](./versions.json) file and creation of a major version directory, populated with generated files.
