@@ -5,6 +5,7 @@ on:
     paths:
       - '**/*.sh'
       - '.github/workflows/shfmt.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read

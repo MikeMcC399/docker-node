@@ -6,16 +6,25 @@ on:
       - closed
 
     paths:
+<<<<<<< HEAD
       - '.github/workflows/official-pr.yml'
       - '**/Dockerfile'
       - '**/docker-entrypoint.sh'
       - 'versions.json'
       - 'stackbrew.js'
+=======
+      - ".github/workflows/official-pr.yml"
+      - "**/Dockerfile"
+      - "**/docker-entrypoint.sh"
+      - "versions.json"
+      - "stackbrew.js"
+  workflow_dispatch:
+>>>>>>> 52c4d307 (add workflow_dispatch to all)
 
 jobs:
   pr:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'nodejs' && github.event.pull_request.merged_by != ''
+    # if: github.repository_owner == 'nodejs' && github.event.pull_request.merged_by != ''
     permissions:
       pull-requests: write
 
@@ -38,29 +47,29 @@ jobs:
           cd docker-node
           ./stackbrew.js > ../official-images/library/node
 
-      - name: Create PR in official-images
-        id: create-pr
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
-        with:
-          token: ${{ secrets.GH_API_TOKEN }}
-          push-to-fork: nodejs/official-images
-          path: official-images
-          branch: node
-          commit-message: 'Node: ${{ github.event.pull_request.title }}'
-          title: 'Node: ${{ github.event.pull_request.title }}'
-          body: |
-            Pull Request: ${{ github.event.pull_request.html_url }}
-            @PeterDaveHello @SimenB @nschonni @rafaelgss @mcollina
+      # - name: Create PR in official-images
+      #   id: create-pr
+      #   uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+      #   with:
+      #     token: ${{ secrets.GH_API_TOKEN }}
+      #     push-to-fork: nodejs/official-images
+      #     path: official-images
+      #     branch: node
+      #     commit-message: 'Node: ${{ github.event.pull_request.title }}'
+      #     title: 'Node: ${{ github.event.pull_request.title }}'
+      #     body: |
+      #       Pull Request: ${{ github.event.pull_request.html_url }}
+      #       @PeterDaveHello @SimenB @nschonni @rafaelgss @mcollina
 
-      - name: PR details
-        run: |
-          echo "Pull Request Number - ${{ steps.create-pr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.create-pr.outputs.pull-request-url }}"
+      # - name: PR details
+      #   run: |
+      #     echo "Pull Request Number - ${{ steps.create-pr.outputs.pull-request-number }}"
+      #     echo "Pull Request URL - ${{ steps.create-pr.outputs.pull-request-url }}"
 
-      - name: Create PR comment
-        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
-        if: ${{ steps.create-pr.outputs.pull-request-url != '' }}
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            Created PR on the official-images repo (${{ steps.create-pr.outputs.pull-request-url }}). See https://github.com/docker-library/faq#an-images-source-changed-in-git-now-what if you are wondering when it will be available on the Docker Hub.
+      # - name: Create PR comment
+      #   uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
+      #   if: ${{ steps.create-pr.outputs.pull-request-url != '' }}
+      #   with:
+      #     issue-number: ${{ github.event.pull_request.number }}
+      #     body: |
+      #       Created PR on the official-images repo (${{ steps.create-pr.outputs.pull-request-url }}). See https://github.com/docker-library/faq#an-images-source-changed-in-git-now-what if you are wondering when it will be available on the Docker Hub.
