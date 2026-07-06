@@ -13,6 +13,7 @@ on:
     - cron: '30 12 * * 6'
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 # Declare default permissions as read only.
 permissions: read-all
@@ -65,9 +66,9 @@ jobs:
           path: results.sarif
           retention-days: 5
 
-      # Upload the results to GitHub's code scanning dashboard (optional).
-      # Commenting out will disable upload of results to your repo's Code Scanning dashboard
-      - name: "Upload to code-scanning"
-        uses: github/codeql-action/upload-sarif@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v4.36.3
-        with:
-          sarif_file: results.sarif
+      # # Upload the results to GitHub's code scanning dashboard (optional).
+      # # Commenting out will disable upload of results to your repo's Code Scanning dashboard
+      # - name: "Upload to code-scanning"
+      #   uses: github/codeql-action/upload-sarif@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v4.36.3
+      #   with:
+      #     sarif_file: results.sarif

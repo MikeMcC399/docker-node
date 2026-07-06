@@ -5,6 +5,7 @@ on:
     paths:
       - "README.md"
       - "docs/BestPractices.md"
+  workflow_dispatch:
 
 permissions:
   contents: read
