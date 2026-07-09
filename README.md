@@ -214,6 +214,12 @@ This image is based on version 11 of
 [Debian](https://debian.org), available in
 [the `debian` official image](https://hub.docker.com/_/debian).
 
+[Debian `bullseye`](https://www.debian.org/releases/bullseye/)
+reaches the end of its 5-year lifecycle on Aug 31, 2026.
+Users should plan to migrate to a higher Debian version
+using `bookworm` / `booworm-slim` (Debian 12) or `trixie` / `trixie-slim` (Debian 13) images.
+New `bullseye` and `bullseye-slim` images will no longer be published after the above date.
+
 ### `node:bookworm`
 
 This image is based on version 12 of
