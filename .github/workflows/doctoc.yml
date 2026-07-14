@@ -5,6 +5,7 @@ on:
     paths:
       - "README.md"
       - "docs/BestPractices.md"
+      - ".github/workflows/doctoc.yml"
 
 permissions:
   contents: read
