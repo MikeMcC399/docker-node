@@ -5,6 +5,7 @@ on:
     paths:
       - "**/*.md"
       - "markdown_link_check_config.json"
+      - ".github/workflows/markdown-link-check.yml"
 
 permissions:
   contents: read
