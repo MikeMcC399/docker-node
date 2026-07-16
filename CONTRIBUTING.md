@@ -148,11 +148,24 @@ After the end of Debian LTS support, the corresponding Debian release is dropped
 
 ### Image Creation Automation
 
-- Every 15 minutes, the [workflow](https://github.com/nodejs/docker-node/blob/main/.github/workflows/automatic-updates.yml) within the [nodejs/docker-node](https://github.com/nodejs/docker-node) repo [checks](https://github.com/nodejs/docker-node/blob/main/build-automation.mjs) for new versions of Node.js [published to the website's `index.json` file](https://nodejs.org/download/release/index.json).
-  - If found, the [update script](https://github.com/nodejs/docker-node/blob/main/update.sh) runs
-  - The workflow opens a pull request either automatically via [nodejs-github-bot](https://github.com/nodejs-github-bot) or in some cases manually, such as when there is a new major release.
-- Another [workflow](https://github.com/nodejs/docker-node/blob/main/.github/workflows/official-pr.yml) detects the merger of these pull requests and opens a pull request to [docker-library/official-images](https://github.com/docker-library/official-images).
-- The official images are built and published according to [docker's process](https://github.com/docker-library/faq#an-images-source-changed-in-git-now-what), resulting in the new images being available on [Docker Hub](https://hub.docker.com/_/node).
+1. Every 15 minutes, the [automatic-updates](https://github.com/nodejs/docker-node/blob/main/.github/workflows/automatic-updates.yml) workflow
+   checks for new versions of Node.js published to https://nodejs.org/download/release and which are referenced in the release site's
+   [index.json](https://nodejs.org/download/release/index.json) file using
+   [build-automation.mjs](https://github.com/nodejs/docker-node/blob/main/build-automation.mjs).
+  - If new versions are found, the
+    [update.sh](https://github.com/nodejs/docker-node/blob/main/update.sh) script runs, which updates individual
+    `Dockerfile` instances for each Node.js version / architecture combination.
+  - The [automatic-updates](https://github.com/nodejs/docker-node/blob/main/.github/workflows/automatic-updates.yml) workflow continues
+    by opening a pull request under the user
+    [nodejs-github-bot](https://github.com/nodejs-github-bot) in a branch named `update-branch`.
+1. The resulting PR with title `feat: Node.js <list of versions>` is reviewed by repo team members, approved and merged.
+1. The workflow [official-pr](https://github.com/nodejs/docker-node/blob/main/.github/workflows/official-pr.yml) then detects the merger of the above pull request,
+   pushes a commit to
+   [nodejs/official-images](https://github.com/nodejs/official-images) and opens a pull request in the parent repo
+   [docker-library/official-images](https://github.com/docker-library/official-images).
+1. The official images are built and published according to the
+   [`docker library` process](https://github.com/docker-library/faq#an-images-source-changed-in-git-now-what), resulting in the new images being available on
+   [Docker Hub](https://hub.docker.com/_/node).
 
 ### Image Creation Manually
 
@@ -170,6 +183,11 @@ To set up a version update pull request, see the [Pull Requests](#pull-requests)
 1. Run `./update.sh`. You can see additional options by using the built-in help documentation with `./update.sh -h`. This script will automatically update the appropriate files with the latest versions and checksums.
 1. Commit the modified files to the `version-update` branch and push the branch to your fork.
 1. Create a pull request.
+
+From this point, team members review, approve and merge the PR.
+The merged files are detected by the workflow [official-pr](https://github.com/nodejs/docker-node/blob/main/.github/workflows/official-pr.yml)
+and the process continues, similar to the related steps described above in
+[Image Creation Automation](#image-creation-automation).
 
 When a new Node.js release line is expected, additional preparation is necessary, including updates to the
 [versions.json](./versions.json) file and creation of a major version directory, populated with generated files.
