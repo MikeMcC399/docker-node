@@ -1,9 +1,10 @@
 {
   "name": "eslint-tools",
   "description": "ESLint tools for docker-node",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-    "lint:eslint": "eslint --config eslint.config.mjs"
+    "lint:eslint": "eslint --config eslint.config.mjs",
+    "lint:eslint:fix": "eslint --config eslint.config.mjs --fix"
   },
   "private": true,
   "devDependencies": {
