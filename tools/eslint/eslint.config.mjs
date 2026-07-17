@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
+import json from '@eslint/json';
 import globals from 'globals';
 import { defineConfig } from 'eslint/config';
 
@@ -29,4 +30,11 @@ export default defineConfig([
     languageOptions: { globals: globals.node },
   },
   { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
+  {
+    files: ['**/*.json'],
+    ignores: ['package-lock.json'],
+    plugins: { json },
+    language: 'json/json',
+    extends: ['json/recommended'],
+  },
 ]);
