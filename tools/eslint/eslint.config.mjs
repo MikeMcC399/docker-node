@@ -32,7 +32,7 @@ export default defineConfig([
   { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
   {
     files: ['**/*.json'],
-    ignores: ['package-lock.json'],
+    ignores: ['**/package-lock.json'],
     plugins: { json },
     language: 'json/json',
     extends: ['json/recommended'],
