@@ -3,7 +3,7 @@
   "description": "ESLint tools for docker-node",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:eslint": "eslint --config eslint.config.mjs"
   },
   "private": true,
   "devDependencies": {
