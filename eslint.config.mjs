@@ -46,9 +46,8 @@ export default defineConfig([
     rules: {
       'yml/indent': ['error', 2],
       'yml/no-empty-mapping-value': 'off',
-      // 'yml/key-spacing': ['error', { beforeColon: false, afterColon: true }],
-      // 'yml/no-multiple-empty-lines': ['error', { max: 1 }],
-      // 'yml/spaced-comment': ['error', 'always'],
+      'yml/no-multiple-empty-lines': ['error', { max: 1 }],
+      'yml/no-trailing-spaces': 'error',
     },
   },
 ]);
