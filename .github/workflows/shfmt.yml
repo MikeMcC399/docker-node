@@ -15,7 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - run: docker run -v "$(pwd)":/sh -w /sh peterdavehello/shfmt:2.6.3 shfmt -sr -i 2 -l -w -ci .
+      - name: Install shfmt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shfmt
+      - run: shfmt -sr -i 2 -l -w -ci .
       - run: git diff --color --exit-code
 
   shellcheck:
