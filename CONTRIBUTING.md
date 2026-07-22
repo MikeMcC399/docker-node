@@ -50,12 +50,20 @@ To contribute to this repo, install:
 - [git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/get-started/get-docker/)
 - [Node.js](https://nodejs.org/en/download) LTS version as specified in [.node-version][.node-version]
+- [shfmt](https://github.com/mvdan/sh) (shell script formatter)
+  - Debian/Ubuntu: `sudo apt-get install shfmt`
+  - Windows: `winget install shfmt`
 
-then fork and clone the repo:
+then [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) and [clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) this repo, then install npm dependencies.
+Replace `<my-github-username>` with the username of your fork.
 
-1. [Fork this project.](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
-2. [Clone the forked repository.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-3. Install dependencies with `npm ci`
+```shell
+git clone https://github.com/<my-username>/docker-node
+cd docker-node
+git remote add upstream https://github.com/nodejs/docker-node
+git remote update
+npm ci # install npm dependencies
+```
 
 ## Pull requests
 
