@@ -8,7 +8,6 @@ Thank you for your contribution. Here are guidelines for contributing to the doc
 ## Table of Contents
 
 - [Governance and decision making](#governance-and-decision-making)
-- [Discussion Areas](#discussion-areas)
 - [Prerequisites](#prerequisites)
 - [Pull requests](#pull-requests)
 - [Linting](#linting)
