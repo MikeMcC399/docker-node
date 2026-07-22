@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - '**/*.sh'
-      - '.github/workflows/shfmt.yml'
+      - .github/workflows/shfmt.yml
 
 permissions:
   contents: read
@@ -13,13 +13,25 @@ jobs:
   shfmt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: docker run -v "$(pwd)":/sh -w /sh peterdavehello/shfmt:2.6.3 shfmt -sr -i 2 -l -w -ci .
-      - run: git diff --color --exit-code
+      - name: Check out repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Run shfmt
+        run: npm run format:shfmt
+      - name: Check for changes
+        run: git diff --color --exit-code
 
   shellcheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check out repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Run ShellCheck
         uses: bewuethr/shellcheck-action@80bac2daa9fcf95d648200a793d00060857e6dc4 # v2.3.0
