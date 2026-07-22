@@ -26,4 +26,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run markdown-link-check on MD files
-        run: find . -name "*.md" | xargs -n 1 markdown-link-check -c markdown_link_check_config.json -q
+        run: npm run check:markdown-links
