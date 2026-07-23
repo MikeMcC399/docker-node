@@ -75,10 +75,17 @@ Make changes in your branch and then submit your contribution as a [pull request
 
 ## Linting
 
-After making changes, execute the following to check for correct formatting. This runs the linting scripts `format:toc` and `format:prettier`. Check the output to see if there are any formatting issues that need manual correction:
+After making changes, execute the following to check for correct formatting.
+This runs the linting scripts `format:toc:check` and `format:prettier:check`.
 
 ```shell
 npm run lint
+```
+
+To fix any linting issues that are automatically fixable, execute:
+
+```shell
+npm run lint:fix
 ```
 
 Alternatively use any of the following commands to call one of the underlying linting utilities:
@@ -86,6 +93,7 @@ Alternatively use any of the following commands to call one of the underlying li
 | Command                         | Purpose                                 |
 | ------------------------------- | --------------------------------------- |
 | `npm run format:toc`            | Reformats any Table of Contents         |
+| `npm run format:toc:check`      | Read-only Table of Contents check       |
 | `npm run format:prettier`       | Reformats multiple types of source code |
 | `npm run format:prettier:check` | Read-only prettier check                |
 

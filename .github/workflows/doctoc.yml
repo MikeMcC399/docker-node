@@ -28,6 +28,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run doctoc
-        run: npx doctoc --update-only .
-      - name: Check for changes
-        run: git diff --exit-code
+        run: npm run format:toc:check
