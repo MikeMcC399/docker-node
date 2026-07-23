@@ -105,6 +105,9 @@ Execute the following to check links in Markdown files:
 npm run check:markdown-links
 ```
 
+If you are running on Microsoft Windows, run the above command in a Git Bash terminal window.
+[Git for Windows](https://gitforwindows.org/) includes Git Bash.
+
 ## Version Updates
 
 New **Node.js** releases are released as soon as possible.
