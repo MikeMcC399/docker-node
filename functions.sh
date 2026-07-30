@@ -9,7 +9,7 @@ info() {
 }
 
 fatal() {
-  printf "**********\\n"
+    printf "**********\\n"
   printf "Fatal Error: %s\\n" "$@"
   printf "**********\\n"
   exit 1

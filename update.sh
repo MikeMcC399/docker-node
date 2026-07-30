@@ -47,7 +47,7 @@ done
 
 cd "$(cd "${0%/*}" && pwd -P)"
 
-IFS=',' read -ra versions_arg <<< "${1:-}"
+    IFS=',' read -ra versions_arg <<< "${1:-}"
 IFS=',' read -ra variant_arg <<< "${2:-}"
 
 IFS=' ' read -ra versions <<< "$(get_versions .)"
