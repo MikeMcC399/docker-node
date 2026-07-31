@@ -6,28 +6,28 @@ const testFiles = ['genMatrix.js', '.github/workflows/build-test.yml'];
 
 const nodeDirRegex = /^\d+$/;
 
-const areTestFilesChanged = (changedFiles) =>
-  changedFiles.some((file) => testFiles.includes(file));
+const areTestFilesChanged = changedFiles =>
+  changedFiles.some(file => testFiles.includes(file));
 
 // Returns a list of the child directories in the given path
-const getChildDirectories = (parent) =>
+const getChildDirectories = parent =>
   fs
     .readdirSync(parent, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
+    .filter(dirent => dirent.isDirectory())
     .map(({ name }) => path.resolve(parent, name));
 
-const getNodeVersionDirs = (base) =>
-  getChildDirectories(base).filter((childPath) =>
+const getNodeVersionDirs = base =>
+  getChildDirectories(base).filter(childPath =>
     nodeDirRegex.test(path.basename(childPath)),
   );
 
 // Returns the paths of Dockerfiles that are at: base/*/Dockerfile
-const getDockerfilesInChildDirs = (base) =>
-  getChildDirectories(base).map((childDir) =>
+const getDockerfilesInChildDirs = base =>
+  getChildDirectories(base).map(childDir =>
     path.resolve(childDir, 'Dockerfile'),
   );
 
-const getAllDockerfiles = (base) =>
+const getAllDockerfiles = base =>
   getNodeVersionDirs(base).flatMap(getDockerfilesInChildDirs);
 
 const getAffectedDockerfiles = (filesAdded, filesModified, filesRenamed) => {
@@ -39,19 +39,19 @@ const getAffectedDockerfiles = (filesAdded, filesModified, filesRenamed) => {
     return getAllDockerfiles(__dirname);
   }
 
-  const modifiedDockerfiles = files.filter((file) =>
+  const modifiedDockerfiles = files.filter(file =>
     file.endsWith('/Dockerfile'),
   );
 
   // Get Dockerfiles affected by modified docker-entrypoint.sh files
   const entrypointAffectedDockerfiles = files
-    .filter((file) => file.endsWith('/docker-entrypoint.sh'))
-    .map((file) => path.resolve(path.dirname(file), 'Dockerfile'));
+    .filter(file => file.endsWith('/docker-entrypoint.sh'))
+    .map(file => path.resolve(path.dirname(file), 'Dockerfile'));
 
   return [...modifiedDockerfiles, ...entrypointAffectedDockerfiles];
 };
 
-const getFullNodeVersionFromDockerfile = (file) =>
+const getFullNodeVersionFromDockerfile = file =>
   fs.readFileSync(file, 'utf8').match(/^ENV NODE_VERSION=(\d*\.*\d*\.\d*)/m)[1];
 
 const getDockerfileMatrixEntry = (file) => {

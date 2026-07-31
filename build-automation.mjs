@@ -45,18 +45,19 @@ const checkIfThereAreNewVersions = async (github) => {
     let filteredNewerVersions = {};
 
     for (let availableVersion of availableVersionsJson) {
-      const [availableMajor, availableMinor, availablePatch] =
-        availableVersion.version.split('v')[1].split('.');
+      const [availableMajor, availableMinor, availablePatch]
+        = availableVersion.version.split('v')[1].split('.');
       if (latestSupportedVersions[availableMajor] == null) {
         continue;
       }
-      const [_latestMajor, latestMinor, latestPatch] =
-        latestSupportedVersions[availableMajor].fullVersion.split('.');
+      // eslint-disable-next-line no-unused-vars
+      const [_latestMajor, latestMinor, latestPatch]
+        = latestSupportedVersions[availableMajor].fullVersion.split('.');
       if (
-        latestSupportedVersions[availableMajor] &&
-        (Number(availableMinor) > Number(latestMinor) ||
-          (availableMinor === latestMinor &&
-            Number(availablePatch) > Number(latestPatch)))
+        latestSupportedVersions[availableMajor]
+        && (Number(availableMinor) > Number(latestMinor)
+          || (availableMinor === latestMinor
+            && Number(availablePatch) > Number(latestPatch)))
       ) {
         filteredNewerVersions[availableMajor] = {
           fullVersion: `${availableMajor}.${availableMinor}.${availablePatch}`,
@@ -66,9 +67,9 @@ const checkIfThereAreNewVersions = async (github) => {
 
     return {
       shouldUpdate:
-        Object.keys(filteredNewerVersions).length > 0 &&
-        JSON.stringify(filteredNewerVersions) !==
-          JSON.stringify(latestSupportedVersions),
+        Object.keys(filteredNewerVersions).length > 0
+        && JSON.stringify(filteredNewerVersions)
+        !== JSON.stringify(latestSupportedVersions),
       versions: filteredNewerVersions,
     };
   } catch (error) {
@@ -87,12 +88,12 @@ const checkForMuslVersionsAndSecurityReleases = async (github, versions) => {
 
     for (let version of Object.keys(versions)) {
       const buildVersion = unofficialBuildsIndexText.find(
-        (indexVersion) =>
+        indexVersion =>
           indexVersion.version === `v${versions[version].fullVersion}`,
       );
 
-      versions[version].muslBuildExists =
-        buildVersion?.files.includes('linux-x64-musl') ?? false;
+      versions[version].muslBuildExists
+        = buildVersion?.files.includes('linux-x64-musl') ?? false;
       versions[version].isSecurityRelease = buildVersion?.security ?? false;
     }
     return versions;
@@ -102,7 +103,7 @@ const checkForMuslVersionsAndSecurityReleases = async (github, versions) => {
   }
 };
 
-export default async function (github) {
+export default async function(github) {
   // if there are no new versions, exit gracefully
   // if there are new versions,
   // check for musl builds
@@ -132,7 +133,7 @@ export default async function (github) {
         process.exit(0);
       }
     }
-    const { stdout } = await exec(`git diff`);
+    const { stdout } = await exec('git diff');
     console.log(stdout);
 
     return updatedVersions.join(', ');

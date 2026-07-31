@@ -150,10 +150,10 @@ for (const version of versions) {
         }
       }
       if (isDefaultSlim) {
-        tags.push(`lts-slim`);
+        tags.push('lts-slim');
       }
       if (variant === defaultAlpine) {
-        tags.push(`lts-alpine`);
+        tags.push('lts-alpine');
       }
     }
 
