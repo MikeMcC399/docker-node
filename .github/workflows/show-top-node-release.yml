@@ -1,0 +1,21 @@
+name: Show top Node.js release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  show-top-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch release index and show top version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          response="$(curl -fsSL https://nodejs.org/download/release/index.json)"
+          top_entry="$(jq '.[0]' <<<"$response")"
+          top_version="$(jq -r '.[0].version' <<<"$response")"
+
+          echo "Top Node.js version: ${top_version}"
+          echo "Top release entry:"
+          echo "$top_entry"
