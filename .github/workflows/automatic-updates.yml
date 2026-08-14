@@ -2,13 +2,13 @@ name: Automatically update Docker image versions
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/15 * * * *'
+  # schedule:
+  #   - cron: '*/15 * * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'nodejs'
+    # if: github.repository_owner == 'nodejs'
     permissions:
       pull-requests: write
 
@@ -26,17 +26,4 @@ jobs:
       - name: Run automation script
         run: npm run build
 
-      - name: Create update PR
-        if: env.NODE_PR_TITLE != ''
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
-        with:
-          token: ${{ secrets.GH_API_TOKEN }}
-          author: 'Node.js GitHub Bot <nodejs-github-bot@users.noreply.github.com>'
-          branch: update-branch
-          base: main
-          commit-message: '${{ env.NODE_PR_TITLE }}'
-          title: '${{ env.NODE_PR_TITLE }}'
-          body: 'If you are reading this PR soon after it has been merged, you may find that new Docker images are missing or appear broken. Check back later and see the [README](https://github.com/nodejs/docker-node#release-availability) for background information.'
-          delete-branch: true
-          team-reviewers: |
-            nodejs/docker
+      - run: git diff
