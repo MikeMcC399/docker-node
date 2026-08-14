@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/missing-checksum.yml'
       - '**/alpine*/Dockerfile'
+  workflow_dispatch:
 
 permissions:
   contents: read
