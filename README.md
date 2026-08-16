@@ -256,11 +256,8 @@ message "no matching manifest". In this case, check back later.
 (See [Docker Library FAQs](https://github.com/docker-library/faq#an-images-source-changed-in-git-now-what)
 for a detailed description of the complex build process.)
 
-For Node.js security releases, Debian-based `node` images may be published in advance
-of Alpine-based images. To build an Alpine-based `node` image requires
-a `musl` build. This may not initially be ready at Node.js release time.
-When processing non-security Node.js releases, the build process will wait for
-the `musl` build before proceeding with Debian- and Alpine-based images.
+Node.js security and non-security releases are processed together for Debian-based
+and Alpine-based `node` images. Alpine images use the official Node.js `musl` build.
 
 ## License
 
@@ -304,9 +301,7 @@ Each of the architectures for Debian images belong to the Node.js support tier 1
 
 ### musl builds for Alpine
 
-`musl` builds for `amd64` are listed under support tier "Experimental" and are tested by the Node.js build process before being used in Docker images. "Experimental" status for Node.js is defined as:
-
-> Experimental: May not compile or test suite may not pass. The core team does not create releases for these platforms. Test failures on experimental platforms do not block releases. Contributions to improve support for these platforms are welcome.
+`musl` builds for `amd64` are listed under support tier 2 and are tested by the Node.js build process before being used in Docker images.
 
 `musl` builds for other architectures, including `arm64`, are not tested before release.
 
