@@ -12,26 +12,18 @@ function usage() {
 
   Examples:
     - update.sh                           # Update all images
-    - update.sh -s                        # Update all images, skip updating Alpine if the musl build is unavailable
     - update.sh 22,24                     # Update all variants of version 22 and 24
-    - update.sh -s 24                     # Update all variants of version 24, except skip updating Alpine if the musl build is unavailable
     - update.sh 24 alpine3.23,alpine3.24  # Update only alpine3.23 & alpine3.24 variants for version 24
     - update.sh . trixie,trixie-slim      # Update only trixie & trixie-slim Debian variants for all versions
 
   OPTIONS:
-    -s Security update; allows Debian updates even if musl build for Alpine is unavailable
     -h Show this message
 
 EOF
 }
 
-SKIP_ALPINE=false
-while getopts "sh" opt; do
+while getopts "h" opt; do
   case "${opt}" in
-    s)
-      SKIP_ALPINE=true
-      shift
-      ;;
     h)
       usage
       exit
@@ -146,15 +138,11 @@ function update_node_version() {
     if is_alpine "${variant}"; then
       alpine_version="${variant#*alpine}"
       checksum=$(
-        curl -sSL --compressed "https://unofficial-builds.nodejs.org/download/release/v${nodeVersion}/SHASUMS256.txt" | grep "node-v${nodeVersion}-linux-x64-musl.tar.xz" | cut -d' ' -f1
+        curl -sSL --compressed "https://nodejs.org/download/release/v${nodeVersion}/SHASUMS256.txt" | grep "node-v${nodeVersion}-linux-x64-musl.tar.xz" | cut -d' ' -f1
       )
       if [ -z "$checksum" ]; then
         rm -f "${dockerfile}-tmp"
-        if [ "${SKIP_ALPINE}" = true ]; then
-          echo "${nodeVersion} is missing the musl build for ${variant}, but skipping for security release!"
-        else
-          fatal "Failed to fetch checksum for musl build version ${nodeVersion}"
-        fi
+        fatal "Failed to fetch checksum for musl build version ${nodeVersion}"
       else
         sed -Ei -e "s/(alpine:)0.0/\\1${alpine_version}/" "${dockerfile}-tmp"
 
