@@ -6,7 +6,9 @@
   "scripts": {
     "build": "ncc build index.js -o dist",
     "build:debian": "docker build -t smaller-images:debian -f Dockerfile.debian .",
-    "test:debian": "docker run --rm smaller-images:debian"
+    "test:debian": "docker run --rm smaller-images:debian",
+    "build:alpine": "docker build -t smaller-images:alpine -f Dockerfile.alpine .",
+    "test:alpine": "docker run --rm smaller-images:alpine"
   },
   "license": "MIT",
   "type": "commonjs",

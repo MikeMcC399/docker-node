@@ -17,7 +17,7 @@ jobs:
         - ubuntu-26.04
         - ubuntu-26.04-arm
         docker-os:
-        # - alpine
+        - alpine
         - debian
     steps:
       - name: Checkout
