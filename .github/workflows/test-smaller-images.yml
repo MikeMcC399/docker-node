@@ -1,0 +1,28 @@
+name: Test smaller images
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-smaller-images:
+    name: Test smaller images
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/smaller-images
+    strategy:
+      fail-fast: false
+      matrix:
+        runner:
+        - ubuntu-26.04
+        - ubuntu-26.04-arm
+        docker-os:
+        # - alpine
+        - debian
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Build
+        run: npm run build:${{ matrix.docker-os }}
+      - name: Test
+        run: npm run test:${{ matrix.docker-os }}

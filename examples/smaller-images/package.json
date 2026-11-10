@@ -1,0 +1,16 @@
+{
+  "name": "smaller-images",
+  "description": "Example for building smaller images",
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js -o dist",
+    "build:debian": "docker build -t smaller-images:debian -f Dockerfile.debian .",
+    "test:debian": "docker run --rm smaller-images:debian"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@vercel/ncc": "^0.45.0"
+  }
+}
